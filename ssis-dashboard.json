@@ -1,0 +1,1234 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 42,
+    "iteration": 1549068864951,
+    "links": [],
+    "panels": [
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "datasource": "$Instance",
+        "decimals": 0,
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 0,
+          "y": 0
+        },
+        "id": 4,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "80%",
+        "prefix": "⚡",
+        "prefixFontSize": "80%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "metric",
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "select\r\n  COUNT(*)  AS metric\r\nfrom SSISDB.[catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) ",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": "",
+        "title": "Executions",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "datasource": "$Instance",
+        "decimals": 0,
+        "description": "Includes Created, Running, Pending & Stopping packages",
+        "format": "short",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 4,
+          "y": 0
+        },
+        "id": 6,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "🏃",
+        "prefixFontSize": "80%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "metric",
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "select\r\n\tCOALESCE( sum(case when e.[status] IN ( 1,2,5,8 ) then 1 else 0 end), 0 ) AS metric\r\nfrom [catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\n\r\n",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": "",
+        "title": "Active",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": true,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "datasource": "$Instance",
+        "decimals": 0,
+        "format": "short",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 8,
+          "y": 0
+        },
+        "id": 7,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "🛑",
+        "prefixFontSize": "80%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "cancelled_packages",
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "select\r\n\tCOALESCE( sum(case when e.[status] = 3 then 1 else 0 end), 0 ) AS cancelled_packages\r\nfrom [catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\n\r\n",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": "1,1",
+        "title": "Cancelled",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": true,
+        "colorValue": false,
+        "colors": [
+          "#d44a3a",
+          "rgba(237, 129, 40, 0.89)",
+          "#299c46"
+        ],
+        "datasource": "$Instance",
+        "decimals": 0,
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 12,
+          "y": 0
+        },
+        "id": 9,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "👍",
+        "prefixFontSize": "80%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "succeeded_packages",
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "select\r\n\t\r\n\tCOALESCE( sum(case when e.[status] = 7 then 1 else 0 end), 0 ) AS succeeded_packages\r\nfrom [catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\n\r\n",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": "1,1",
+        "title": "Succeeded",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": true,
+        "colorPostfix": false,
+        "colorPrefix": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "datasource": "$Instance",
+        "decimals": 0,
+        "description": "Includes Failed, Ended & Completed packages",
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 16,
+          "y": 0
+        },
+        "id": 8,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "💣",
+        "prefixFontSize": "80%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "failed_packages",
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "select\r\n\t\r\n\tCOALESCE( sum(case when e.[status] IN ( 4,6,9 ) then 1 else 0 end), 0 ) AS failed_packages\r\nfrom [catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\n\r\n",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": "1,1",
+        "title": "Failed",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "$Instance",
+        "fill": 1,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 3
+        },
+        "id": 11,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": false,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "",
+            "format": "time_series",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "DECLARE @folderNamePattern NVARCHAR(100) = '%$Folder%';\r\nDECLARE @projectNamePattern NVARCHAR(100) = '%$Project%';\r\nDECLARE @packageNamePattern NVARCHAR(100) = '%$Package%';\r\n\r\nselect $__timeGroup(e.start_time, '1h', 0 ) AS [time],\r\n COALESCE( sum(case when e.[status] IN ( 1,2,5,8 ) then 1 else 0 end), 0 ) AS active_packages ,\r\n\tCOALESCE( sum(case when e.[status] = 3 then 1 else 0 end), 0 ) AS cancelled_packages,\r\n\tCOALESCE( sum(case when e.[status] = 7 then 1 else 0 end), 0 ) AS succeeded_packages,\r\n\tCOALESCE( sum(case when e.[status] IN ( 4,6,9 ) then 1 else 0 end), 0 ) AS failed_packages\r\nfrom [catalog].executions e\r\nWHERE e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\nAND   e.folder_name like @folderNamePattern\r\nAND   e.project_name like @projectNamePattern\r\nAND   e.package_name like @packageNamePattern\r\nGROUP BY  $__timeGroup(e.start_time, '1h', 0)\r\nORDER BY $__timeGroup(e.start_time, '1h', 0)",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Executions",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "columns": [],
+        "datasource": "$Instance",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 11,
+          "w": 24,
+          "x": 0,
+          "y": 10
+        },
+        "id": 13,
+        "links": [],
+        "pageSize": 10,
+        "scroll": true,
+        "showHeader": true,
+        "sort": {
+          "col": 0,
+          "desc": true
+        },
+        "styles": [
+          {
+            "alias": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "pattern": "Time",
+            "type": "date"
+          },
+          {
+            "alias": "#",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 0,
+            "link": true,
+            "linkTargetBlank": false,
+            "linkTooltip": "Details",
+            "linkUrl": "https://localhost/d/ONhucxlmk/execution-details?var-Instance=$Instance&var-ExecutionID=${__cell}",
+            "mappingType": 1,
+            "pattern": "execution_id",
+            "thresholds": [],
+            "type": "number",
+            "unit": "none"
+          },
+          {
+            "alias": "Project",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "project_name",
+            "thresholds": [],
+            "type": "string",
+            "unit": "short"
+          },
+          {
+            "alias": "Package",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "package_name",
+            "thresholds": [],
+            "type": "string",
+            "unit": "short"
+          },
+          {
+            "alias": "",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "project_lsn",
+            "thresholds": [],
+            "type": "hidden",
+            "unit": "short"
+          },
+          {
+            "alias": "Environment",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "environment",
+            "thresholds": [],
+            "type": "string",
+            "unit": "short"
+          },
+          {
+            "alias": "Status",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "status",
+            "thresholds": [],
+            "type": "string",
+            "unit": "short",
+            "valueMaps": [
+              {
+                "text": "Created",
+                "value": "1"
+              },
+              {
+                "text": "Running",
+                "value": "2"
+              },
+              {
+                "text": "Cancelled",
+                "value": "3"
+              },
+              {
+                "text": "Failed",
+                "value": "4"
+              },
+              {
+                "text": "Pending",
+                "value": "5"
+              },
+              {
+                "text": "Ended",
+                "value": "6"
+              },
+              {
+                "text": "Succeeded",
+                "value": "7"
+              },
+              {
+                "text": "Stopping",
+                "value": "8"
+              },
+              {
+                "text": "Completed",
+                "value": "9"
+              }
+            ]
+          },
+          {
+            "alias": "Start Time",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "start_time",
+            "thresholds": [],
+            "type": "date",
+            "unit": "short"
+          },
+          {
+            "alias": "End Time",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "end_time",
+            "thresholds": [],
+            "type": "date",
+            "unit": "short"
+          },
+          {
+            "alias": "Elapsed (Min)",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "elapsed_time_min",
+            "thresholds": [],
+            "type": "number",
+            "unit": "m"
+          },
+          {
+            "alias": "Warnings",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 0,
+            "mappingType": 1,
+            "pattern": "warnings",
+            "thresholds": [],
+            "type": "number",
+            "unit": "short"
+          },
+          {
+            "alias": "Errors",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 0,
+            "mappingType": 1,
+            "pattern": "errors",
+            "thresholds": [],
+            "type": "number",
+            "unit": "short"
+          },
+          {
+            "alias": "Logging",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "mappingType": 1,
+            "pattern": "logging_level",
+            "thresholds": [],
+            "type": "string",
+            "unit": "short",
+            "valueMaps": [
+              {
+                "text": "None",
+                "value": "0"
+              },
+              {
+                "text": "Basic",
+                "value": "1"
+              },
+              {
+                "text": "Performance",
+                "value": "2"
+              },
+              {
+                "text": "Verbose",
+                "value": "3"
+              },
+              {
+                "text": "Runtime",
+                "value": "4"
+              },
+              {
+                "text": "Custom",
+                "value": "100"
+              }
+            ]
+          },
+          {
+            "alias": "",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "decimals": 2,
+            "pattern": "/.*/",
+            "thresholds": [],
+            "type": "number",
+            "unit": "short"
+          }
+        ],
+        "targets": [
+          {
+            "alias": "",
+            "format": "table",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "orderByTime": "ASC",
+            "policy": "default",
+            "rawSql": "\r\nDECLARE @folderNamePattern NVARCHAR(100) = '%$Folder%';\r\nDECLARE @projectNamePattern NVARCHAR(100) = '%$Project%';\r\nDECLARE @packageNamePattern NVARCHAR(100) = '%$Package%';\r\n\r\n\r\nwith cteWE as\r\n(\r\n\tselect \r\n\t\toperation_id, event_name, event_count = count(*)\r\n\tfrom \r\n\t\t[catalog].event_messages \r\n\twhere\r\n\t\tevent_name in ('OnError', 'OnWarning')\r\n\tgroup by\r\n\t\toperation_id, event_name\r\n),\r\ncteKPI as\r\n(\r\n\tselect\r\n\t\toperation_id,\r\n\t\t[errors] = OnError,\r\n\t\twarnings = OnWarning\r\n\tfrom\r\n\t\tcteWE\r\n\tpivot\r\n\t\t(\r\n\t\t\tsum(event_count) for event_name in (OnError, OnWarning)\r\n\t\t) p\r\n),\r\ncteLoglevel as\r\n(\r\n\tselect\r\n\t\texecution_id,\r\n\t\tcast(parameter_value as int) as logging_level\r\n\tfrom\r\n\t\t[catalog].[execution_parameter_values]\r\n\twhere\r\n\t\tparameter_name = 'LOGGING_LEVEL'\r\n)\r\nselect \r\n\te.execution_id, \r\n\te.project_name,\r\n\te.package_name,\r\n\te.project_lsn,\r\n\tenvironment = isnull(e.environment_folder_name, '') + isnull('\\' + e.environment_name,  ''), \r\n\te.status, \r\n\tstart_time = format(e.start_time, 'yyyy-MM-dd HH:mm:ss'),\r\n\tend_time = format(e.end_time, 'yyyy-MM-dd HH:mm:ss'),\r\n\telapsed_time_min = format(datediff(ss, e.start_time, e.end_time) / 60., '#,0.00'),\r\n\tk.warnings,\r\n\tk.errors,\r\n\tl.logging_level\r\nfrom \r\n\t[catalog].executions e \r\nleft outer join\r\n\tcteKPI k on e.execution_id = k.operation_id\r\nleft outer join\r\n\tcteLoglevel l on e.execution_id = l.execution_id\r\nwhere e.folder_name like @folderNamePattern\r\nand   e.project_name like @projectNamePattern\r\nand   e.package_name like @packageNamePattern\r\nAND e.start_time >=  CONVERT( DATETIMEOFFSET, $__timeFrom(), 0 ) \r\nAND   e.start_time <   CONVERT( DATETIMEOFFSET, $__timeTo(), 0 ) \r\nAND CASE e.status \r\n      WHEN 1 THEN 'Created'\r\n      WHEN 2 THEN 'Running'\r\n      WHEN 3 THEN 'Cancelled'\r\n      WHEN 4 THEN 'Failed'\r\n      WHEN 5 THEN 'Pending'\r\n      WHEN 6 THEN 'Ended'\r\n      WHEN 7 THEN 'Succeeded'\r\n      WHEN 8 THEN 'Stopping'\r\n      WHEN 9 THEN 'Completed'\r\n    END\r\nIN ($Status)\r\n\r\norder by \r\n\te.execution_id desc\r\noption\r\n\t(recompile)",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "title": "Executions",
+        "transform": "table",
+        "type": "table"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 16,
+    "style": "dark",
+    "tags": [
+      "SSIS"
+    ],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": 0,
+          "label": null,
+          "name": "Instance",
+          "options": [],
+          "query": "mssql",
+          "refresh": 1,
+          "regex": "/.*SSIS.*/",
+          "skipUrlSync": false,
+          "type": "datasource"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": 2,
+          "label": null,
+          "name": "Folder",
+          "options": [
+            {
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": 0,
+          "label": null,
+          "name": "Project",
+          "options": [
+            {
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": 0,
+          "label": null,
+          "name": "Package",
+          "options": [
+            {
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "tags": [],
+            "text": "All",
+            "value": [
+              "$__all"
+            ]
+          },
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": true,
+          "name": "Status",
+          "options": [
+            {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            },
+            {
+              "selected": false,
+              "text": "Created",
+              "value": "Created"
+            },
+            {
+              "selected": false,
+              "text": "Running",
+              "value": "Running"
+            },
+            {
+              "selected": false,
+              "text": "Cancelled",
+              "value": "Cancelled"
+            },
+            {
+              "selected": false,
+              "text": "Failed",
+              "value": "Failed"
+            },
+            {
+              "selected": false,
+              "text": "Pending",
+              "value": "Pending"
+            },
+            {
+              "selected": false,
+              "text": "Ended",
+              "value": "Ended"
+            },
+            {
+              "selected": false,
+              "text": "Succeeded",
+              "value": "Succeeded"
+            },
+            {
+              "selected": false,
+              "text": "Stopping",
+              "value": "Stopping"
+            },
+            {
+              "selected": false,
+              "text": "Completed",
+              "value": "Completed"
+            }
+          ],
+          "query": "Created,Running,Cancelled,Failed,Pending,Ended,Succeeded,Stopping,Completed",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-12h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "timezone": "",
+    "title": "SSIS Dashboard",
+    "uid": "kPb0JAlik",
+    "version": 17
+  }
